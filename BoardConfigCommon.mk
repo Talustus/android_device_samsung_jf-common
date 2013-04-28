@@ -25,50 +25,48 @@
 # against the traditional rules of inheritance).
 USE_CAMERA_STUB := true
 
-# inherit from common msm8960
--include device/samsung/msm8960-common/BoardConfigCommon.mk
+# Baseline
+TARGET_ARCH := arm
+TARGET_NO_BOOTLOADER := true
+TARGET_BOARD_PLATFORM := MSM8960
+ARCH_ARM_HAVE_TLS_REGISTER := true
+
+# Inherit from qcom-common
+-include device/samsung/qcom-common/BoardConfigCommon.mk
 
 # Kernel
-TARGET_KERNEL_SOURCE        := kernel/samsung/jflte
-BOARD_KERNEL_CMDLINE        := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3
-BOARD_KERNEL_BASE           := 0x80208000
-BOARD_FORCE_RAMDISK_ADDRESS := 0x82200000
-BOARD_KERNEL_PAGESIZE       := 2048
-
+BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3
+BOARD_KERNEL_BASE := 0x80200000
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
+BOARD_KERNEL_PAGESIZE := 2048
 TARGET_BOOTLOADER_BOARD_NAME := MSM8960
 
 # Recovery
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/jfltespr-common/recovery/recovery_keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_FSTAB := device/samsung/jfltespr-common/recovery.fstab
+TARGET_RECOVERY_FSTAB := device/samsung/jflte-common/recovery.fstab
 
 TARGET_USERIMAGES_USE_EXT4 := true
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00A00000
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00A00000
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1572864000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 28651290624
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x105c0000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x105c0000
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x105c0000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x105c0000
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-# bluetooth
-#BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/jflte-common/bluetooth
-#BOARD_BLUEDROID_VENDOR_CONF := device/samsung/jflte-common/bluetooth/vnd_jflte.txt
-#BOARD_BLUETOOTH_USES_HCIATTACH_PROPERTY := false
+# TWRP flags
+DEVICE_RESOLUTION := 1080x1920
+TW_INTERNAL_STORAGE_PATH := "/data/media"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/external_sdcard"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sdcard"
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_HAS_NO_REAL_SDCARD := true
 
-# Disable initlogo, Samsungs framebuffer is weird
-TARGET_NO_INITLOGO := true
+# OUDHS Flags
+BOARD_CUSTOM_RECOVERY_SAMSUNG := true
+BOARD_RAINBOW_GRAPHICS := true
 
-# HAX
-#BOARD_USE_SAMSUNG_SEPARATEDSTREAM := true
-#BOARD_USES_LIBMEDIA_WITH_AUDIOPARAMETER := true
-#TARGET_PROVIDES_LIBAUDIO := true
-
-# Use Audience A2220 chip
-#BOARD_HAVE_AUDIENCE_A2220 := true
-
-# Use USB Dock Audio
-#BOARD_HAVE_DOCK_USBAUDIO := true
 
