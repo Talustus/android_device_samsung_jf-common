@@ -57,9 +57,22 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libnetcmdiface
 
-# Set default USB interface
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+	e2fsck
+
+# Debugging
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.secure=0 \
+	service.adb.enable=1 \
+	sys.usb.config=adb \
+	ro.debuggable=1 \
+	persist.service.adb.enable=1
+
+# Default.prop
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
+	persist.sys.usb.config=mtp \
+	ro.adb.secure=0
 
 # Lights
 PRODUCT_PACKAGES += lights.msm8960
